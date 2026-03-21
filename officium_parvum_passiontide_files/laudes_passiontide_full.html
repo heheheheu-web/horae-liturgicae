@@ -1,0 +1,277 @@
+<!DOCTYPE html>
+<html lang="la">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>LAUDES · LAUDS — Horae Liturgicae</title>
+
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=EB+Garamond:ital,wght@0,400;0,500;0,600;0,700;1,400;1,500&family=Cinzel:wght@400;500;600;700&display=swap');
+  :root {
+    --parchment: #f4edd3; --parchment-dark: #e8dfc4;
+    --ink: #1a1108; --ink-light: #3d2e14;
+    --rubric: #8b1a1a; --rule: #6b5b3e;
+  }
+  * { margin:0; padding:0; box-sizing:border-box; }
+  @page { size: A3 landscape; margin:0; }
+  body { background:#2a2218; font-family:'EB Garamond','Georgia',serif; color:var(--ink); display:flex; justify-content:center; align-items:center; min-height:100vh; padding:2rem; }
+  .spread { display:flex; width:1480px; box-shadow:0 8px 40px rgba(0,0,0,0.6); }
+  .page { width:740px; min-height:1040px; background:var(--parchment); background-image: radial-gradient(ellipse at 30% 20%,rgba(180,160,120,0.15) 0%,transparent 60%), radial-gradient(ellipse at 80% 80%,rgba(160,140,100,0.12) 0%,transparent 50%); position:relative; overflow:hidden; }
+  .page-left { border-right:1px solid var(--rule); display:flex; align-items:center; justify-content:center; }
+  .page-left img { width:100%; height:100%; object-fit:cover; }
+  .page-right { display:flex; flex-direction:column; }
+  .border-frame { position:absolute; inset:18px; border:2.5px solid var(--ink-light); display:flex; flex-direction:column; }
+  .border-frame::before { content:''; position:absolute; inset:4px; border:1px solid var(--rule); pointer-events:none; }
+  .border-frame::after { content:''; position:absolute; inset:8px; border:0.5px solid rgba(107,91,62,0.3); pointer-events:none; }
+  .page-header { text-align:center; padding:24px 30px 12px; }
+  .header-ornament { font-size:16px; color:var(--rubric); margin-bottom:6px; }
+  .hour-title { font-family:'Cinzel',serif; font-size:24px; font-weight:700; letter-spacing:0.3em; color:var(--ink); }
+  .hour-rubric { font-family:'EB Garamond',serif; font-style:italic; font-size:13px; color:var(--rubric); margin-top:4px; letter-spacing:0.05em; }
+  .header-rule { margin-top:10px; height:1px; background:linear-gradient(90deg,transparent,var(--rule),transparent); position:relative; }
+  .rule-cross { position:absolute; top:-7px; left:50%; transform:translateX(-50%); background:var(--parchment); padding:0 8px; font-size:10px; color:var(--rubric); }
+  .office-content { flex:1; padding:6px 28px; overflow-y:auto; }
+  .office-section { margin-bottom:12px; padding-bottom:10px; border-bottom:0.5px solid rgba(107,91,62,0.2); }
+  .office-section.conclusion { border-bottom:none; margin-bottom:0; }
+  .section-heading { font-family:'Cinzel',serif; font-size:11px; font-weight:600; letter-spacing:0.25em; text-transform:uppercase; color:var(--ink-light); margin-bottom:6px; }
+  .heading-cross { color:var(--rubric); margin-right:6px; font-size:10px; }
+  .two-col { display:grid; grid-template-columns:1fr 1fr; gap:20px; }
+  .col-la { padding-right:10px; border-right:0.5px solid rgba(107,91,62,0.15); }
+  .col-en { padding-left:10px; color:var(--ink-light); }
+  .col-la p, .col-en p { font-size:12.5px; line-height:1.55; margin-bottom:2px; }
+  .rubric { color:var(--rubric); font-size:11px; font-weight:500; }
+  .rubric-inline { color:var(--rubric); font-style:italic; font-size:11px; }
+  .antiphon { font-style:italic; font-size:12.5px; }
+  .hymn-text { font-size:12.5px; line-height:1.7; }
+  .gloria { text-align:center; font-size:11px; color:var(--ink-light); margin-top:6px; font-style:italic; }
+  .psalm-list { margin:8px 0 4px; padding-left:12px; }
+  .psalm-ref { font-size:12px; margin-bottom:2px; font-weight:500; }
+  .psalm-incipit { font-style:italic; font-weight:400; color:var(--ink-light); font-size:11.5px; }
+
+  .psalm-full { margin-top:10px; }
+  .psalm-block { margin:0 0 14px; }
+  .psalm-title { font-family:'Cinzel',serif; font-size:12px; letter-spacing:0.08em; text-transform:uppercase; color:var(--rule); margin:0 0 6px; }
+  .psalm-verse { margin:0 0 3px; line-height:1.5; font-size:11.2px; }
+  .verse-no { color:var(--ink-light); font-size:10px; display:inline-block; min-width:1.5em; }
+  .psalm-gloria { margin:6px 0 0; font-style:italic; color:var(--ink-light); font-size:10.8px; }
+
+  .fidelium-line { text-align:center; margin-top:8px; }
+  .fidelium { font-size:10.5px; font-style:italic; }
+  .collect-rubric { margin-top:4px; font-style:italic; }
+  .response-mark { margin-top:4px; }
+  .page-footer { padding:8px 30px 16px; text-align:center; }
+  .footer-rule { height:1px; background:linear-gradient(90deg,transparent,var(--rule),transparent); margin-bottom:8px; }
+  .footer-text { font-family:'Cinzel',serif; font-size:8.5px; letter-spacing:0.2em; color:var(--rule); text-transform:uppercase; }
+  @media print { body{background:none;padding:0;} .spread{box-shadow:none;width:100%;} .page{break-inside:avoid;} }
+</style>
+
+</head>
+<body>
+<div class="spread">
+
+<div class="page page-left">
+  <img src="../assets/laudes.png" alt="LAUDES · LAUDS">
+</div>
+
+<div class="page page-right">
+  <div class="border-frame">
+
+    <header class="page-header">
+      <div class="header-ornament">✠</div>
+      <h1 class="hour-title">LAUDES · LAUDS</h1>
+      <p class="hour-rubric">Officium Parvum Beatæ Mariæ Virginis</p>
+      <div class="header-rule"><span class="rule-cross">✦</span></div>
+    </header>
+
+    <main class="office-content">
+
+      <section class="office-section">
+        <h2 class="section-heading"><span class="heading-cross">✠</span> Introitus</h2>
+        <div class="two-col">
+          <div class="col-la">
+            <p class="rubric">℣.</p><p>Deus, in adiutórium meum inténde.</p>
+            <p class="rubric">℟.</p><p>Dómine, ad adiuvándum me festína.</p>
+          </div>
+          <div class="col-en">
+            <p class="rubric">℣.</p><p>O God, come to my assistance.</p>
+            <p class="rubric">℟.</p><p>O Lord, make haste to help me.</p>
+          </div>
+        </div>
+        <p class="gloria">Glória Patri, et Fílio, et Spirítui Sancto. <span class="rubric-inline">In Passiontide: Laus tibi, Dómine, Rex ætérnæ glóriæ.</span></p>
+      </section>
+
+      <section class="office-section">
+        <h2 class="section-heading"><span class="heading-cross">❦</span> Hymnus</h2>
+        <div class="two-col">
+          <div class="col-la"><p class="hymn-text">O gloriósa vírginum,<br/>sublímis inter sídera,<br/>qui te creávit, párvulum<br/>lacténte nutris úbere.</p></div>
+          <div class="col-en"><p class="hymn-text">O glorious Lady, throned in rest,<br/>amidst the starry host above,<br/>who gave thy Maker of thy breast<br/>the nurture of a Mother's love.</p></div>
+        </div>
+      </section>
+
+      <section class="office-section">
+        <h2 class="section-heading"><span class="heading-cross">✠</span> Psalmodia</h2>
+        <div class="two-col">
+          <div class="col-la">
+            <p class="rubric">Ant.</p>
+            <p class="antiphon">Assúmpta est María in cælum: ✶ gaudent Ángeli.</p>
+          </div>
+          <div class="col-en">
+            <p class="rubric">Ant.</p>
+            <p class="antiphon">Mary is taken up into heaven: ✶ the Angels rejoice.</p>
+          </div>
+        </div>
+        <div class="two-col psalm-expansion">
+<div class="col-la psalm-full">
+<div class="psalm-block"><p class="psalm-title">Psalmus 92</p>
+<p class="psalm-verse"><span class="verse-no">1.</span> Dóminus regnávit, decórem indútus est: indútus est Dóminus fortitúdinem, et præcínxit se.</p>
+<p class="psalm-verse"><span class="verse-no">2.</span> Étenim firmávit orbem terræ, qui non commovébitur.</p>
+<p class="psalm-verse"><span class="verse-no">3.</span> Paráta sedes tua ex tunc: a sǽculo tu es.</p>
+<p class="psalm-verse"><span class="verse-no">4.</span> Elevavérunt flúmina, Dómine: elevavérunt flúmina vocem suam.</p>
+<p class="psalm-verse"><span class="verse-no">5.</span> Elevavérunt flúmina fluctus suos, a vócibus aquárum multárum.</p>
+<p class="psalm-verse"><span class="verse-no">6.</span> Mirábiles elatiónes maris: mirábilis in altis Dóminus.</p>
+<p class="psalm-verse"><span class="verse-no">7.</span> Testimónia tua credibília facta sunt nimis: domum tuam decet sanctitúdo, Dómine, in longitúdinem diérum.</p>
+<p class="psalm-gloria">Glória Patri, et Fílio, et Spirítui Sancto. / Glory be to the Father, and to the Son, and to the Holy Ghost.</p>
+</div>
+<div class="psalm-block"><p class="psalm-title">Psalmus 99</p>
+<p class="psalm-verse"><span class="verse-no">1.</span> Jubiláte Deo, omnis terra: servíte Dómino in lætítia.</p>
+<p class="psalm-verse"><span class="verse-no">2.</span> Introíte in conspéctu eius, in exsultatióne.</p>
+<p class="psalm-verse"><span class="verse-no">3.</span> Scitóte quóniam Dóminus ipse est Deus: ipse fecit nos, et non ipsi nos.</p>
+<p class="psalm-verse"><span class="verse-no">4.</span> Pópulus eius, et oves páscuæ eius: introíte portas eius in confessióne, átria eius in hymnis.</p>
+<p class="psalm-verse"><span class="verse-no">5.</span> Confitémini illi. Laudáte nomen eius: quóniam suávis est Dóminus, in ætérnum misericórdia eius.</p>
+<p class="psalm-verse"><span class="verse-no">6.</span> Et usque in generatiónem et generatiónem véritas eius.</p>
+<p class="psalm-gloria">Glória Patri, et Fílio, et Spirítui Sancto. / Glory be to the Father, and to the Son, and to the Holy Ghost.</p>
+</div>
+<div class="psalm-block"><p class="psalm-title">Psalmus 62</p>
+<p class="psalm-verse"><span class="verse-no">1.</span> Deus, Deus meus, ad te de luce vígilo.</p>
+<p class="psalm-verse"><span class="verse-no">2.</span> Sitívit in te ánima mea, quam multiplíciter tibi caro mea.</p>
+<p class="psalm-verse"><span class="verse-no">3.</span> In terra desérta, et ínvia, et inaquósa: sic in sancto appárui tibi, ut vidérem virtútem tuam et glóriam tuam.</p>
+<p class="psalm-verse"><span class="verse-no">4.</span> Quóniam mélior est misericórdia tua super vitas: lábia mea laudábunt te.</p>
+<p class="psalm-verse"><span class="verse-no">5.</span> Sic benedícam te in vita mea: et in nómine tuo levábo manus meas.</p>
+<p class="psalm-verse"><span class="verse-no">6.</span> Sicut ádipe et pinguédine repleátur ánima mea: et lábiis exsultatiónis laudábit os meum.</p>
+<p class="psalm-verse"><span class="verse-no">7.</span> Si memor fui tui super stratum meum, in matutínis meditábor in te: quia fuísti adiútor meus.</p>
+<p class="psalm-verse"><span class="verse-no">8.</span> Et in velaménto alárum tuárum exsultábo, adhǽsit ánima mea post te: me suscépit déxtera tua.</p>
+<p class="psalm-verse"><span class="verse-no">9.</span> Ipsi vero in vanum quæsiérunt ánimam meam, introíbunt in inferióra terræ.</p>
+<p class="psalm-verse"><span class="verse-no">10.</span> Tradéntur in manus gládii, partes vúlpium erunt.</p>
+<p class="psalm-verse"><span class="verse-no">11.</span> Rex vero lætábitur in Deo, laudabúntur omnes qui iurant in eo: quia obstrúctum est os loquéntium iníqua.</p>
+<p class="psalm-gloria">Glória Patri, et Fílio, et Spirítui Sancto. / Glory be to the Father, and to the Son, and to the Holy Ghost.</p>
+</div>
+</div>
+<div class="col-en psalm-full">
+<div class="psalm-block"><p class="psalm-title">Psalmus 92</p>
+<p class="psalm-verse"><span class="verse-no">1.</span> The Lord hath reigned, he is clothed with beauty: the Lord is clothed with strength, and hath girded himself.</p>
+<p class="psalm-verse"><span class="verse-no">2.</span> For he hath established the world which shall not be moved.</p>
+<p class="psalm-verse"><span class="verse-no">3.</span> Thy throne is prepared from of old: thou art from everlasting.</p>
+<p class="psalm-verse"><span class="verse-no">4.</span> The floods have lifted up, O Lord: the floods have lifted up their voice.</p>
+<p class="psalm-verse"><span class="verse-no">5.</span> The floods have lifted up their waves, with the noise of many waters.</p>
+<p class="psalm-verse"><span class="verse-no">6.</span> Wonderful are the surges of the sea: wonderful is the Lord on high.</p>
+<p class="psalm-verse"><span class="verse-no">7.</span> Thy testimonies are become exceedingly credible: holiness becometh thy house, O Lord, unto length of days.</p>
+<p class="psalm-gloria">Sicut erat in princípio, et nunc, et semper, et in sǽcula sæculórum. Amen. / As it was in the beginning, is now, and ever shall be, world without end. Amen.</p>
+</div>
+<div class="psalm-block"><p class="psalm-title">Psalmus 99</p>
+<p class="psalm-verse"><span class="verse-no">1.</span> Sing joyfully to God, all the earth: serve ye the Lord with gladness.</p>
+<p class="psalm-verse"><span class="verse-no">2.</span> Come in before his presence with exceeding great joy.</p>
+<p class="psalm-verse"><span class="verse-no">3.</span> Know ye that the Lord he is God: he made us, and not we ourselves.</p>
+<p class="psalm-verse"><span class="verse-no">4.</span> We are his people and the sheep of his pasture: go ye into his gates with praise, into his courts with hymns.</p>
+<p class="psalm-verse"><span class="verse-no">5.</span> Give glory to him. Praise ye his name: for the Lord is sweet, his mercy endureth for ever.</p>
+<p class="psalm-verse"><span class="verse-no">6.</span> And his truth unto generation and generation.</p>
+<p class="psalm-gloria">Sicut erat in princípio, et nunc, et semper, et in sǽcula sæculórum. Amen. / As it was in the beginning, is now, and ever shall be, world without end. Amen.</p>
+</div>
+<div class="psalm-block"><p class="psalm-title">Psalmus 62</p>
+<p class="psalm-verse"><span class="verse-no">1.</span> O God, my God, to thee do I watch at break of day.</p>
+<p class="psalm-verse"><span class="verse-no">2.</span> For thee my soul hath thirsted; for thee my flesh, O how many ways!</p>
+<p class="psalm-verse"><span class="verse-no">3.</span> In a desert land and where there is no way and no water: so in the sanctuary have I appeared before thee, that I might behold thy power and thy glory.</p>
+<p class="psalm-verse"><span class="verse-no">4.</span> For thy mercy is better than lives: thee my lips shall praise.</p>
+<p class="psalm-verse"><span class="verse-no">5.</span> Thus will I bless thee all my life long: and in thy name I will lift up my hands.</p>
+<p class="psalm-verse"><span class="verse-no">6.</span> Let my soul be filled as with marrow and fatness: and my mouth shall praise thee with joyful lips.</p>
+<p class="psalm-verse"><span class="verse-no">7.</span> If I have remembered thee upon my bed, in the morning I will meditate on thee: because thou hast been my helper.</p>
+<p class="psalm-verse"><span class="verse-no">8.</span> And I will rejoice under the covert of thy wings, my soul hath stuck close to thee: thy right hand hath received me.</p>
+<p class="psalm-verse"><span class="verse-no">9.</span> But they have sought my soul in vain, they shall go into the lower parts of the earth.</p>
+<p class="psalm-verse"><span class="verse-no">10.</span> They shall be delivered into the hands of the sword, they shall be the portions of foxes.</p>
+<p class="psalm-verse"><span class="verse-no">11.</span> But the king shall rejoice in God, all they shall be praised that swear by him: because the mouth is stopped of them that speak wicked things.</p>
+<p class="psalm-gloria">Sicut erat in princípio, et nunc, et semper, et in sǽcula sæculórum. Amen. / As it was in the beginning, is now, and ever shall be, world without end. Amen.</p>
+</div>
+</div>
+</div>
+<p class="gloria">Repetitur Antiphona. In Passiontide: <span class="rubric-inline">Laus tibi, Dómine, Rex ætérnæ glóriæ.</span></p>
+      </section>
+
+      <section class="office-section">
+        <h2 class="section-heading"><span class="heading-cross">✠</span> Capitulum</h2>
+        <div class="two-col">
+          <div class="col-la">
+            <p class="reading-ref rubric">Cant. 6:9</p>
+            <p>Quæ est ista quæ progréditur quasi auróra consúrgens, pulchra ut luna, elécta ut sol?</p>
+            <p class="rubric response-mark">℟. Deo grátias.</p>
+          </div>
+          <div class="col-en">
+            <p class="reading-ref rubric">Cant. 6:9</p>
+            <p>Who is she that cometh forth as the morning rising, fair as the moon, bright as the sun?</p>
+            <p class="rubric response-mark">℟. Thanks be to God.</p>
+          </div>
+        </div>
+      </section>
+
+      <section class="office-section">
+        <h2 class="section-heading"><span class="heading-cross">❦</span> Responsorium Breve</h2>
+        <div class="two-col">
+          <div class="col-la"><p>℟. br. Dignáre me laudáre te, ✶ Virgo sacráta.</p></div>
+          <div class="col-en"><p>℟. br. Vouchsafe that I may praise thee, ✶ O sacred Virgin.</p></div>
+        </div>
+      </section>
+
+      <section class="office-section">
+        <h2 class="section-heading"><span class="heading-cross">✠</span> Versiculus</h2>
+        <div class="two-col">
+          <div class="col-la"><p>℣. Benedícta tu in muliéribus.<br/>℟. Et benedíctus fructus ventris tui.</p></div>
+          <div class="col-en"><p>℣. Blessed art thou among women.<br/>℟. And blessed is the fruit of thy womb.</p></div>
+        </div>
+      </section>
+
+      <section class="office-section">
+        <h2 class="section-heading"><span class="heading-cross">✠</span> Oratio</h2>
+        <div class="two-col">
+          <div class="col-la">
+            <p><span class="rubric">℣.</span> Dómine, exáudi oratiónem meam.</p>
+            <p><span class="rubric">℟.</span> Et clamor meus ad te véniat.</p>
+            <p class="rubric collect-rubric">Orémus.</p>
+            <p>Deus, qui de beátæ Maríæ Vírginis útero Verbum tuum, Angelo nuntiánte, carnem suscípere voluísti: præsta supplícibus tuis; ut, qui vere eam Genetrícem Dei crédimus, eius apud te intercessiónibus adiuvémur. Per eúndem Dóminum.</p>
+            <p class="rubric response-mark">℟. Amen.</p>
+          </div>
+          <div class="col-en">
+            <p><span class="rubric">℣.</span> O Lord, hear my prayer.</p>
+            <p><span class="rubric">℟.</span> And let my cry come unto thee.</p>
+            <p class="rubric collect-rubric">Let us pray.</p>
+            <p>O God, who wast pleased that thy Word should take flesh in the womb of the Blessed Virgin Mary: grant to us thy suppliants, that we who believe her to be truly the Mother of God may be helped by her intercession. Through the same our Lord.</p>
+            <p class="rubric response-mark">℟. Amen.</p>
+          </div>
+        </div>
+      </section>
+
+      <section class="office-section conclusion">
+        <div class="two-col">
+          <div class="col-la">
+            <p><span class="rubric">℣.</span> Benedicámus Dómino.</p>
+            <p><span class="rubric">℟.</span> Deo grátias.</p>
+          </div>
+          <div class="col-en">
+            <p><span class="rubric">℣.</span> Let us bless the Lord.</p>
+            <p><span class="rubric">℟.</span> Thanks be to God.</p>
+          </div>
+        </div>
+        <div class="fidelium-line">
+          <p class="rubric fidelium">℣. Fidélium ánimæ, per misericórdiam Dei, requiéscant in pace. ℟. Amen.</p>
+        </div>
+      </section>
+
+    </main>
+
+    <footer class="page-footer">
+      <div class="footer-rule"></div>
+      <p class="footer-text">Horae Liturgicae · Officium Parvum B.M.V. · Usus Romanus ante 1962</p>
+    </footer>
+
+  </div>
+</div>
+
+</div>
+</body>
+</html>

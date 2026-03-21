@@ -1,0 +1,303 @@
+<!DOCTYPE html>
+<html lang="la">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>MATUTINUM · MATINS — Horae Liturgicae</title>
+
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=EB+Garamond:ital,wght@0,400;0,500;0,600;0,700;1,400;1,500&family=Cinzel:wght@400;500;600;700&display=swap');
+  :root {
+    --parchment: #f4edd3; --parchment-dark: #e8dfc4;
+    --ink: #1a1108; --ink-light: #3d2e14;
+    --rubric: #8b1a1a; --rule: #6b5b3e;
+  }
+  * { margin:0; padding:0; box-sizing:border-box; }
+  @page { size: A3 landscape; margin:0; }
+  body { background:#2a2218; font-family:'EB Garamond','Georgia',serif; color:var(--ink); display:flex; justify-content:center; align-items:center; min-height:100vh; padding:2rem; }
+  .spread { display:flex; width:1480px; box-shadow:0 8px 40px rgba(0,0,0,0.6); }
+  .page { width:740px; min-height:1040px; background:var(--parchment); background-image: radial-gradient(ellipse at 30% 20%,rgba(180,160,120,0.15) 0%,transparent 60%), radial-gradient(ellipse at 80% 80%,rgba(160,140,100,0.12) 0%,transparent 50%); position:relative; overflow:hidden; }
+  .page-left { border-right:1px solid var(--rule); display:flex; align-items:center; justify-content:center; }
+  .page-left img { width:100%; height:100%; object-fit:cover; }
+  .page-right { display:flex; flex-direction:column; }
+  .border-frame { position:absolute; inset:18px; border:2.5px solid var(--ink-light); display:flex; flex-direction:column; }
+  .border-frame::before { content:''; position:absolute; inset:4px; border:1px solid var(--rule); pointer-events:none; }
+  .border-frame::after { content:''; position:absolute; inset:8px; border:0.5px solid rgba(107,91,62,0.3); pointer-events:none; }
+  .page-header { text-align:center; padding:24px 30px 12px; }
+  .header-ornament { font-size:16px; color:var(--rubric); margin-bottom:6px; }
+  .hour-title { font-family:'Cinzel',serif; font-size:24px; font-weight:700; letter-spacing:0.3em; color:var(--ink); }
+  .hour-rubric { font-family:'EB Garamond',serif; font-style:italic; font-size:13px; color:var(--rubric); margin-top:4px; letter-spacing:0.05em; }
+  .header-rule { margin-top:10px; height:1px; background:linear-gradient(90deg,transparent,var(--rule),transparent); position:relative; }
+  .rule-cross { position:absolute; top:-7px; left:50%; transform:translateX(-50%); background:var(--parchment); padding:0 8px; font-size:10px; color:var(--rubric); }
+  .office-content { flex:1; padding:6px 28px; overflow-y:auto; }
+  .office-section { margin-bottom:12px; padding-bottom:10px; border-bottom:0.5px solid rgba(107,91,62,0.2); }
+  .office-section.conclusion { border-bottom:none; margin-bottom:0; }
+  .section-heading { font-family:'Cinzel',serif; font-size:11px; font-weight:600; letter-spacing:0.25em; text-transform:uppercase; color:var(--ink-light); margin-bottom:6px; }
+  .heading-cross { color:var(--rubric); margin-right:6px; font-size:10px; }
+  .two-col { display:grid; grid-template-columns:1fr 1fr; gap:20px; }
+  .col-la { padding-right:10px; border-right:0.5px solid rgba(107,91,62,0.15); }
+  .col-en { padding-left:10px; color:var(--ink-light); }
+  .col-la p, .col-en p { font-size:12.5px; line-height:1.55; margin-bottom:2px; }
+  .rubric { color:var(--rubric); font-size:11px; font-weight:500; }
+  .rubric-inline { color:var(--rubric); font-style:italic; font-size:11px; }
+  .antiphon { font-style:italic; font-size:12.5px; }
+  .hymn-text { font-size:12.5px; line-height:1.7; }
+  .gloria { text-align:center; font-size:11px; color:var(--ink-light); margin-top:6px; font-style:italic; }
+  .psalm-list { margin:8px 0 4px; padding-left:12px; }
+  .psalm-ref { font-size:12px; margin-bottom:2px; font-weight:500; }
+  .psalm-incipit { font-style:italic; font-weight:400; color:var(--ink-light); font-size:11.5px; }
+
+  .psalm-full { margin-top:10px; }
+  .psalm-block { margin:0 0 14px; }
+  .psalm-title { font-family:'Cinzel',serif; font-size:12px; letter-spacing:0.08em; text-transform:uppercase; color:var(--rule); margin:0 0 6px; }
+  .psalm-verse { margin:0 0 3px; line-height:1.5; font-size:11.2px; }
+  .verse-no { color:var(--ink-light); font-size:10px; display:inline-block; min-width:1.5em; }
+  .psalm-gloria { margin:6px 0 0; font-style:italic; color:var(--ink-light); font-size:10.8px; }
+
+  .fidelium-line { text-align:center; margin-top:8px; }
+  .fidelium { font-size:10.5px; font-style:italic; }
+  .collect-rubric { margin-top:4px; font-style:italic; }
+  .response-mark { margin-top:4px; }
+  .page-footer { padding:8px 30px 16px; text-align:center; }
+  .footer-rule { height:1px; background:linear-gradient(90deg,transparent,var(--rule),transparent); margin-bottom:8px; }
+  .footer-text { font-family:'Cinzel',serif; font-size:8.5px; letter-spacing:0.2em; color:var(--rule); text-transform:uppercase; }
+  @media print { body{background:none;padding:0;} .spread{box-shadow:none;width:100%;} .page{break-inside:avoid;} }
+</style>
+
+</head>
+<body>
+<div class="spread">
+
+<div class="page page-left">
+  <img src="../assets/matutinum.png" alt="MATUTINUM · MATINS">
+</div>
+
+<div class="page page-right">
+  <div class="border-frame">
+
+    <header class="page-header">
+      <div class="header-ornament">✠</div>
+      <h1 class="hour-title">MATUTINUM · MATINS</h1>
+      <p class="hour-rubric">Officium Parvum Beatæ Mariæ Virginis</p>
+      <div class="header-rule"><span class="rule-cross">✦</span></div>
+    </header>
+
+    <main class="office-content">
+
+      <section class="office-section">
+        <h2 class="section-heading"><span class="heading-cross">✠</span> Introitus</h2>
+        <div class="two-col">
+          <div class="col-la">
+            <p class="rubric">℣.</p><p>Deus, in adiutórium meum inténde.</p>
+            <p class="rubric">℟.</p><p>Dómine, ad adiuvándum me festína.</p>
+          </div>
+          <div class="col-en">
+            <p class="rubric">℣.</p><p>O God, come to my assistance.</p>
+            <p class="rubric">℟.</p><p>O Lord, make haste to help me.</p>
+          </div>
+        </div>
+        <p class="gloria">Glória Patri, et Fílio, et Spirítui Sancto. <span class="rubric-inline">In Passiontide: Laus tibi, Dómine, Rex ætérnæ glóriæ.</span></p>
+      </section>
+
+      <section class="office-section">
+        <h2 class="section-heading"><span class="heading-cross">❦</span> Hymnus</h2>
+        <div class="two-col">
+          <div class="col-la"><p class="hymn-text">Quem terra, pontus, æthera<br/>colunt, adórant, prǽdicant,<br/>trinam regéntem máchinam<br/>claustrum Maríæ bájulat.</p></div>
+          <div class="col-en"><p class="hymn-text">The God whom earth and sea and sky<br/>adore and laud and magnify,<br/>whose might they own, whose praise they tell,<br/>in Mary's body deigned to dwell.</p></div>
+        </div>
+      </section>
+
+      <section class="office-section">
+        <h2 class="section-heading"><span class="heading-cross">✠</span> Psalmodia</h2>
+        <div class="two-col">
+          <div class="col-la">
+            <p class="rubric">Ant.</p>
+            <p class="antiphon">Benedícta tu in muliéribus, ✶ et benedíctus fructus ventris tui.</p>
+          </div>
+          <div class="col-en">
+            <p class="rubric">Ant.</p>
+            <p class="antiphon">Blessed art thou among women, ✶ and blessed is the fruit of thy womb.</p>
+          </div>
+        </div>
+        <div class="two-col psalm-expansion">
+<div class="col-la psalm-full">
+<div class="psalm-block"><p class="psalm-title">Psalmus 8</p>
+<p class="psalm-verse"><span class="verse-no">1.</span> Dómine, Dóminus noster, quam admirábile est nomen tuum in univérsa terra!</p>
+<p class="psalm-verse"><span class="verse-no">2.</span> Quóniam eleváta est magnificéntia tua super cælos.</p>
+<p class="psalm-verse"><span class="verse-no">3.</span> Ex ore infántium et lacténtium perfecísti laudem propter inimícos tuos, ut déstruas inimícum et ultórem.</p>
+<p class="psalm-verse"><span class="verse-no">4.</span> Quóniam vidébo cælos tuos, ópera digitórum tuórum: lunam et stellas quæ tu fundásti.</p>
+<p class="psalm-verse"><span class="verse-no">5.</span> Quid est homo, quod memor es eius? aut fílius hóminis, quóniam vísitas eum?</p>
+<p class="psalm-verse"><span class="verse-no">6.</span> Minuísti eum paulo minus ab Ángelis, glória et honóre coronásti eum.</p>
+<p class="psalm-verse"><span class="verse-no">7.</span> Et constituísti eum super ópera mánuum tuárum.</p>
+<p class="psalm-verse"><span class="verse-no">8.</span> Ómnia subiecísti sub pédibus eius, oves et boves univérsas: ínsuper et pécora campi.</p>
+<p class="psalm-verse"><span class="verse-no">9.</span> Vólucres cæli, et pisces maris, qui perámbulant sémitas maris.</p>
+<p class="psalm-verse"><span class="verse-no">10.</span> Dómine, Dóminus noster, quam admirábile est nomen tuum in univérsa terra!</p>
+<p class="psalm-gloria">Glória Patri, et Fílio, et Spirítui Sancto. / Glory be to the Father, and to the Son, and to the Holy Ghost.</p>
+</div>
+<div class="psalm-block"><p class="psalm-title">Psalmus 18</p>
+<p class="psalm-verse"><span class="verse-no">1.</span> Cæli enárrant glóriam Dei: et ópera mánuum eius annúntiat firmaméntum.</p>
+<p class="psalm-verse"><span class="verse-no">2.</span> Dies diéi erúctat verbum: et nox nocti índicat sciéntiam.</p>
+<p class="psalm-verse"><span class="verse-no">3.</span> Non sunt loquélæ, neque sermónes: quorum non audiántur voces eórum.</p>
+<p class="psalm-verse"><span class="verse-no">4.</span> In omnem terram exívit sonus eórum: et in fines orbis terræ verba eórum.</p>
+<p class="psalm-verse"><span class="verse-no">5.</span> In sole pósuit tabernáculum suum: et ipse tamquam sponsus procédens de thálamo suo.</p>
+<p class="psalm-verse"><span class="verse-no">6.</span> Exsultávit ut gigas ad curréndam viam: a summo cælo egréssio eius.</p>
+<p class="psalm-verse"><span class="verse-no">7.</span> Et occúrsus eius usque ad summum eius: nec est qui se abscóndat a calóre eius.</p>
+<p class="psalm-verse"><span class="verse-no">8.</span> Lex Dómini immaculáta, convértens ánimas: testimónium Dómini fidéle, sapiéntiam præstans párvulis.</p>
+<p class="psalm-verse"><span class="verse-no">9.</span> Iustítiæ Dómini rectæ, lætificántes corda: præcéptum Dómini lúcidum, illúminans óculos.</p>
+<p class="psalm-verse"><span class="verse-no">10.</span> Timor Dómini sanctus, pérmanens in sǽculum sǽculi: iudícia Dómini vera, iustificáta in semetípsa.</p>
+<p class="psalm-verse"><span class="verse-no">11.</span> Desiderabília super aurum et lápidem pretiósum multum: et dulcióra super mel et favum.</p>
+<p class="psalm-verse"><span class="verse-no">12.</span> Etenim servus tuus custódit ea: in custodiéndis illis retribútio multa.</p>
+<p class="psalm-verse"><span class="verse-no">13.</span> Delícta quis intéllegit? ab occúltis meis munda me.</p>
+<p class="psalm-verse"><span class="verse-no">14.</span> Et ab aliénis parce servo tuo: si mei non fúerint domináti, tunc immaculátus ero.</p>
+<p class="psalm-verse"><span class="verse-no">15.</span> Et emundábor a delícto máximo.</p>
+<p class="psalm-verse"><span class="verse-no">16.</span> Et erunt ut compláceant elóquia oris mei: et meditátio cordis mei in conspéctu tuo semper.</p>
+<p class="psalm-verse"><span class="verse-no">17.</span> Dómine, adiútor meus, et redémptor meus.</p>
+<p class="psalm-gloria">Glória Patri, et Fílio, et Spirítui Sancto. / Glory be to the Father, and to the Son, and to the Holy Ghost.</p>
+</div>
+<div class="psalm-block"><p class="psalm-title">Psalmus 23</p>
+<p class="psalm-verse"><span class="verse-no">1.</span> Dómini est terra et plenitúdo eius: orbis terrárum, et univérsi qui hábitant in eo.</p>
+<p class="psalm-verse"><span class="verse-no">2.</span> Quia ipse super mária fundávit eum: et super flúmina præparávit eum.</p>
+<p class="psalm-verse"><span class="verse-no">3.</span> Quis ascéndet in montem Dómini? aut quis stabit in loco sancto eius?</p>
+<p class="psalm-verse"><span class="verse-no">4.</span> Innocens mánibus et mundo corde, qui non accépit in vano ánimam suam, nec iurávit in dolo próximo suo.</p>
+<p class="psalm-verse"><span class="verse-no">5.</span> Hic accípiet benedictiónem a Dómino, et misericórdiam a Deo salutári suo.</p>
+<p class="psalm-verse"><span class="verse-no">6.</span> Hæc est generátio quæréntium eum, quæréntium fáciem Dei Iacob.</p>
+<p class="psalm-verse"><span class="verse-no">7.</span> Attóllite portas, príncipes, vestras, et elevámini, portæ ætérnales: et introíbit Rex glóriæ.</p>
+<p class="psalm-verse"><span class="verse-no">8.</span> Quis est iste Rex glóriæ? Dóminus fortis et potens, Dóminus potens in prǽlio.</p>
+<p class="psalm-verse"><span class="verse-no">9.</span> Attóllite portas, príncipes, vestras, et elevámini, portæ ætérnales: et introíbit Rex glóriæ.</p>
+<p class="psalm-verse"><span class="verse-no">10.</span> Quis est iste Rex glóriæ? Dóminus virtútum ipse est Rex glóriæ.</p>
+<p class="psalm-gloria">Glória Patri, et Fílio, et Spirítui Sancto. / Glory be to the Father, and to the Son, and to the Holy Ghost.</p>
+</div>
+</div>
+<div class="col-en psalm-full">
+<div class="psalm-block"><p class="psalm-title">Psalmus 8</p>
+<p class="psalm-verse"><span class="verse-no">1.</span> O Lord, our Lord, how admirable is thy name in all the earth!</p>
+<p class="psalm-verse"><span class="verse-no">2.</span> For thy magnificence is elevated above the heavens.</p>
+<p class="psalm-verse"><span class="verse-no">3.</span> Out of the mouth of infants and sucklings thou hast perfected praise because of thine enemies, that thou mayst destroy the enemy and the avenger.</p>
+<p class="psalm-verse"><span class="verse-no">4.</span> For I will behold thy heavens, the works of thy fingers: the moon and the stars which thou hast founded.</p>
+<p class="psalm-verse"><span class="verse-no">5.</span> What is man that thou art mindful of him? or the son of man that thou visitest him?</p>
+<p class="psalm-verse"><span class="verse-no">6.</span> Thou hast made him a little less than the angels, thou hast crowned him with glory and honour.</p>
+<p class="psalm-verse"><span class="verse-no">7.</span> And hast set him over the works of thy hands.</p>
+<p class="psalm-verse"><span class="verse-no">8.</span> Thou hast subjected all things under his feet, all sheep and oxen, moreover also the beasts of the field.</p>
+<p class="psalm-verse"><span class="verse-no">9.</span> The birds of the air and the fishes of the sea, that pass through the paths of the sea.</p>
+<p class="psalm-verse"><span class="verse-no">10.</span> O Lord, our Lord, how admirable is thy name in all the earth!</p>
+<p class="psalm-gloria">Sicut erat in princípio, et nunc, et semper, et in sǽcula sæculórum. Amen. / As it was in the beginning, is now, and ever shall be, world without end. Amen.</p>
+</div>
+<div class="psalm-block"><p class="psalm-title">Psalmus 18</p>
+<p class="psalm-verse"><span class="verse-no">1.</span> The heavens show forth the glory of God, and the firmament declareth the work of his hands.</p>
+<p class="psalm-verse"><span class="verse-no">2.</span> Day to day uttereth speech, and night to night showeth knowledge.</p>
+<p class="psalm-verse"><span class="verse-no">3.</span> There are no speeches nor languages where their voices are not heard.</p>
+<p class="psalm-verse"><span class="verse-no">4.</span> Their sound hath gone forth into all the earth, and their words unto the ends of the world.</p>
+<p class="psalm-verse"><span class="verse-no">5.</span> He hath set his tabernacle in the sun: and he, as a bridegroom coming out of his bridechamber.</p>
+<p class="psalm-verse"><span class="verse-no">6.</span> Hath rejoiced as a giant to run the way: his going out is from the end of heaven.</p>
+<p class="psalm-verse"><span class="verse-no">7.</span> And his circuit even to the end thereof: and there is none that can hide himself from his heat.</p>
+<p class="psalm-verse"><span class="verse-no">8.</span> The law of the Lord is unspotted, converting souls: the testimony of the Lord is faithful, giving wisdom to little ones.</p>
+<p class="psalm-verse"><span class="verse-no">9.</span> The justices of the Lord are right, rejoicing hearts: the commandment of the Lord is lightsome, enlightening the eyes.</p>
+<p class="psalm-verse"><span class="verse-no">10.</span> The fear of the Lord is holy, enduring for ever and ever: the judgments of the Lord are true, justified in themselves.</p>
+<p class="psalm-verse"><span class="verse-no">11.</span> More to be desired than gold and many precious stones: and sweeter than honey and the honeycomb.</p>
+<p class="psalm-verse"><span class="verse-no">12.</span> For thy servant keepeth them, and in keeping them there is a great reward.</p>
+<p class="psalm-verse"><span class="verse-no">13.</span> Who can understand sins? from my secret ones cleanse me, O Lord.</p>
+<p class="psalm-verse"><span class="verse-no">14.</span> And from those of others spare thy servant: if they shall have no dominion over me, then shall I be without spot.</p>
+<p class="psalm-verse"><span class="verse-no">15.</span> And I shall be cleansed from the greatest sin.</p>
+<p class="psalm-verse"><span class="verse-no">16.</span> And the words of my mouth shall be such as may please, and the meditation of my heart always in thy sight.</p>
+<p class="psalm-verse"><span class="verse-no">17.</span> O Lord, my helper and my redeemer.</p>
+<p class="psalm-gloria">Sicut erat in princípio, et nunc, et semper, et in sǽcula sæculórum. Amen. / As it was in the beginning, is now, and ever shall be, world without end. Amen.</p>
+</div>
+<div class="psalm-block"><p class="psalm-title">Psalmus 23</p>
+<p class="psalm-verse"><span class="verse-no">1.</span> The earth is the Lord&#x27;s and the fullness thereof, the world and all they that dwell therein.</p>
+<p class="psalm-verse"><span class="verse-no">2.</span> For he hath founded it upon the seas, and hath prepared it upon the rivers.</p>
+<p class="psalm-verse"><span class="verse-no">3.</span> Who shall ascend into the mountain of the Lord? or who shall stand in his holy place?</p>
+<p class="psalm-verse"><span class="verse-no">4.</span> The innocent in hands and clean of heart, who hath not taken his soul in vain, nor sworn deceitfully to his neighbour.</p>
+<p class="psalm-verse"><span class="verse-no">5.</span> He shall receive a blessing from the Lord and mercy from God his Saviour.</p>
+<p class="psalm-verse"><span class="verse-no">6.</span> This is the generation of them that seek him, of them that seek the face of the God of Jacob.</p>
+<p class="psalm-verse"><span class="verse-no">7.</span> Lift up your gates, O ye princes, and be ye lifted up, O eternal gates: and the King of glory shall enter in.</p>
+<p class="psalm-verse"><span class="verse-no">8.</span> Who is this King of glory? The Lord who is strong and mighty, the Lord mighty in battle.</p>
+<p class="psalm-verse"><span class="verse-no">9.</span> Lift up your gates, O ye princes, and be ye lifted up, O eternal gates: and the King of glory shall enter in.</p>
+<p class="psalm-verse"><span class="verse-no">10.</span> Who is this King of glory? The Lord of hosts, he is the King of glory.</p>
+<p class="psalm-gloria">Sicut erat in princípio, et nunc, et semper, et in sǽcula sæculórum. Amen. / As it was in the beginning, is now, and ever shall be, world without end. Amen.</p>
+</div>
+</div>
+</div>
+<p class="gloria">Repetitur Antiphona. In Passiontide: <span class="rubric-inline">Laus tibi, Dómine, Rex ætérnæ glóriæ.</span></p>
+      </section>
+
+      <section class="office-section">
+        <h2 class="section-heading"><span class="heading-cross">✠</span> Capitulum</h2>
+        <div class="two-col">
+          <div class="col-la">
+            <p class="reading-ref rubric">Eccli. 24:11-13</p>
+            <p>In ómnibus réquiem quæsívi, et in hereditáte Dómini morábor.</p>
+            <p class="rubric response-mark">℟. Deo grátias.</p>
+          </div>
+          <div class="col-en">
+            <p class="reading-ref rubric">Eccli. 24:11-13</p>
+            <p>In all things I sought rest, and I shall abide in the inheritance of the Lord.</p>
+            <p class="rubric response-mark">℟. Thanks be to God.</p>
+          </div>
+        </div>
+      </section>
+
+      <section class="office-section">
+        <h2 class="section-heading"><span class="heading-cross">❦</span> Responsorium Breve</h2>
+        <div class="two-col">
+          <div class="col-la"><p>℟. br. Spécie tua ✶ et pulchritúdine tua.</p></div>
+          <div class="col-en"><p>℟. br. In thy comeliness ✶ and thy beauty.</p></div>
+        </div>
+      </section>
+
+      <section class="office-section">
+        <h2 class="section-heading"><span class="heading-cross">✠</span> Versiculus</h2>
+        <div class="two-col">
+          <div class="col-la"><p>℣. Diffúsa est grátia in lábiis tuis.<br/>℟. Proptérea benedíxit te Deus in ætérnum.</p></div>
+          <div class="col-en"><p>℣. Grace is poured abroad in thy lips.<br/>℟. Therefore God hath blessed thee for ever.</p></div>
+        </div>
+      </section>
+
+      <section class="office-section">
+        <h2 class="section-heading"><span class="heading-cross">✠</span> Oratio</h2>
+        <div class="two-col">
+          <div class="col-la">
+            <p><span class="rubric">℣.</span> Dómine, exáudi oratiónem meam.</p>
+            <p><span class="rubric">℟.</span> Et clamor meus ad te véniat.</p>
+            <p class="rubric collect-rubric">Orémus.</p>
+            <p>Dómine Deus omnípotens, qui ad princípium huius diéi nos perveníre fecísti: tua nos hódie salva virtúte; ut in hac die ad nullum declinémus peccátum. Per Dóminum.</p>
+            <p class="rubric response-mark">℟. Amen.</p>
+          </div>
+          <div class="col-en">
+            <p><span class="rubric">℣.</span> O Lord, hear my prayer.</p>
+            <p><span class="rubric">℟.</span> And let my cry come unto thee.</p>
+            <p class="rubric collect-rubric">Let us pray.</p>
+            <p>O Lord God almighty, who hast brought us to the beginning of this day: save us by thy power, that this day we may fall into no sin. Through our Lord.</p>
+            <p class="rubric response-mark">℟. Amen.</p>
+          </div>
+        </div>
+      </section>
+
+      <section class="office-section conclusion">
+        <div class="two-col">
+          <div class="col-la">
+            <p><span class="rubric">℣.</span> Benedicámus Dómino.</p>
+            <p><span class="rubric">℟.</span> Deo grátias.</p>
+          </div>
+          <div class="col-en">
+            <p><span class="rubric">℣.</span> Let us bless the Lord.</p>
+            <p><span class="rubric">℟.</span> Thanks be to God.</p>
+          </div>
+        </div>
+        <div class="fidelium-line">
+          <p class="rubric fidelium">℣. Fidélium ánimæ, per misericórdiam Dei, requiéscant in pace. ℟. Amen.</p>
+        </div>
+      </section>
+
+    </main>
+
+    <footer class="page-footer">
+      <div class="footer-rule"></div>
+      <p class="footer-text">Horae Liturgicae · Officium Parvum B.M.V. · Usus Romanus ante 1962</p>
+    </footer>
+
+  </div>
+</div>
+
+</div>
+</body>
+</html>

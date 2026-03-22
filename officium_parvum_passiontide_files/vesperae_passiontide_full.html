@@ -61,12 +61,12 @@
   .page-footer { padding:8px 30px 16px; text-align:center; }
   .footer-rule { height:1px; background:linear-gradient(90deg,transparent,var(--rule),transparent); margin-bottom:8px; }
   .footer-text { font-family:'Cinzel',serif; font-size:8.5px; letter-spacing:0.2em; color:var(--rule); text-transform:uppercase; }
-  @media print { body{background:none;padding:0;} .spread{box-shadow:none;width:100%;} .page{break-inside:avoid;} }
+  @media (max-width: 1024px) { body { padding: 0; background: var(--parchment); } .spread { flex-direction: column; width: 100%; box-shadow: none; } .page { width: 100%; min-height: auto; border-right: none; } .page-left { height: 35vh; min-height: 250px; border-bottom: 2px solid var(--rule); } .page-left img { object-position: center top; } .border-frame { position: relative; inset: 0; border: none; padding: 15px 5px; } .border-frame::before, .border-frame::after { display: none; } .two-col { grid-template-columns: 1fr; gap: 8px; } .col-la { border-right: none; border-bottom: 1px dashed rgba(107,91,62,0.3); padding-bottom: 8px; padding-right: 0; } .col-en { padding-left: 0; margin-bottom: 15px; } .col-la p, .col-en p, .hymn-text, .antiphon, .psalm-verse { font-size: 14px; } .hour-title { font-size: 20px; } } @media print { body{background:none;padding:0;} .spread{box-shadow:none;width:100%;} .page{break-inside:avoid;} }
 </style>
 
 </head>
 <body>
-<div class="spread">
+<div class="spread"><a href="../index.html" style="position:fixed;top:10px;left:50%;transform:translateX(-50%);z-index:999;text-align:center;display:block;color:var(--rubric);text-decoration:none;font-family:'Cinzel',serif;font-size:10px;letter-spacing:0.1em;opacity:0.8;background:var(--parchment);padding:4px 12px;border:1px solid var(--rule);">&#8592; Revertere ad Indicem</a>
 
 <div class="page page-left">
   <img src="../assets/vespera.png" alt="VESPERAE · VESPERS">

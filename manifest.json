@@ -1,0 +1,21 @@
+{
+  "name": "Horae Liturgicae",
+  "short_name": "Horae",
+  "description": "Officium Parvum Beatae Mariae Virginis · Usus Romanus ante 1962",
+  "start_url": "/horae-liturgicae/index.html",
+  "display": "standalone",
+  "background_color": "#f4edd3",
+  "theme_color": "#8b1a1a",
+  "icons": [
+    {
+      "src": "assets/icon.png",
+      "sizes": "192x192",
+      "type": "image/png"
+    },
+    {
+      "src": "assets/icon.png",
+      "sizes": "512x512",
+      "type": "image/png"
+    }
+  ]
+}
